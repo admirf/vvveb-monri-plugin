@@ -72,7 +72,7 @@ class Payment extends PaymentMethod {
             return $method_data;
         }
 
-        $payment = $this->monriPayment($settings['secret'], $settings['merchant_key'], [
+        $payment = $this->monriPayment($settings['url'], $settings['secret'], $settings['merchant_key'], [
             'amount' => intval(round(floatval($cart->getGrandTotal()), 2) * 100),
             'currency' => sess('currency') ?? 'BAM',
             'order_id' => 'new_order' . time(),
@@ -107,7 +107,7 @@ class Payment extends PaymentMethod {
 
     }
 
-    protected function monriPayment(string $authenticity_token, string $key, $data) {
+    protected function monriPayment(string $url = 'https://ipgtest.monri.com', string $authenticity_token, string $key, $data) {
         $data = [
             'amount' => $data['amount'], //minor units = 1EUR
             // unique order identifier
@@ -120,8 +120,7 @@ class Payment extends PaymentMethod {
         ];
 
         $body_as_string = json_encode($data); // use php's standard library equivalent if Json::encode is not available in your code
-        $base_url = 'https://ipgtest.monri.com'; // parametrize this value
-        $ch = curl_init($base_url . '/v2/payment/new');
+        $ch = curl_init($url . '/v2/payment/new');
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
         curl_setopt($ch, CURLOPT_POSTFIELDS, $body_as_string);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
