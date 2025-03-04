@@ -72,7 +72,7 @@ class Payment extends PaymentMethod {
             return $method_data;
         }
 
-        $payment = $this->monriPayment($settings['url'], $settings['secret'], $settings['merchant_key'], [
+        $payment = $this->monriPayment($settings['url'] ?? 'https://ipgtest.monri.com', $settings['secret'], $settings['merchant_key'], [
             'amount' => intval(round(floatval($cart->getGrandTotal()), 2) * 100),
             'currency' => sess('currency') ?? 'BAM',
             'order_id' => 'new_order' . time(),
@@ -107,7 +107,7 @@ class Payment extends PaymentMethod {
 
     }
 
-    protected function monriPayment(string $url = 'https://ipgtest.monri.com', string $authenticity_token, string $key, $data) {
+    protected function monriPayment(string $url, string $authenticity_token, string $key, $data) {
         $data = [
             'amount' => $data['amount'], //minor units = 1EUR
             // unique order identifier

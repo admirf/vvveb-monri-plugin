@@ -106,49 +106,6 @@ class VvvebMonriPlugin {
 			}
 		}
 	}
-
-    function monriPayment(string $authenticity_token, string $key, $data) {
-        $data = [
-            'amount' => 100, //minor units = 1EUR
-            // unique order identifier
-            'order_number' => 'random' . time(),
-            'currency' => 'EUR',
-            'transaction_type' => 'purchase',
-            'order_info' => 'Create payment session order info',
-            'scenario' => 'charge',
-            'supported_payment_methods' => ['card']
-        ];
-
-        $body_as_string = json_encode($data); // use php's standard library equivalent if Json::encode is not available in your code
-        $base_url = 'https://ipgtest.monri.com'; // parametrize this value
-        $ch = curl_init($base_url . '/v2/payment/new');
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $body_as_string);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-
-        $timestamp = time();
-        $digest = hash('sha512', $key . $timestamp .$authenticity_token. $body_as_string);
-        $authorization = "WP3-v2 $authenticity_token $timestamp $digest";
-
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            'Content-Type: application/json',
-            'Content-Length: ' . strlen($body_as_string),
-            'Authorization: ' . $authorization
-            )
-        );
-
-        $result = curl_exec($ch);
-
-        if (curl_errno($ch)) {
-            curl_close($ch);
-            return ['client_secret' => null, 'status' => 'declined', 'error' => curl_error($ch)];
-        } else {
-            curl_close($ch);
-            return ['status' => 'approved', 'client_secret' => Json::decode($result)['client_secret']];
-        }
-    }
 }
 
 $monri = new VvvebMonriPlugin();
