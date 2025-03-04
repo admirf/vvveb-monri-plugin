@@ -1,0 +1,1 @@
+body|append = from(/public/plugins/vvveb-monri-plugin/stripe.html|head > *)

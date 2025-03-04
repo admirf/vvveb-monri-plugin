@@ -1,0 +1,94 @@
+<div>
+    <script src="https://ipgtest.monri.com/dist/components.js"></script>
+    <div>
+        <div action="" method="post" id="payment-form">
+            <div class="form-row">
+                <label for="card-element">
+                    Credit or debit card
+                </label>
+                <div id="card-element">
+                    <!-- A Monri Component will be inserted here. -->
+                </div>
+
+                <!-- Used to display Component errors. -->
+                <div id="card-errors" role="alert"></div>
+            </div>
+
+            <!--<button id="submit-payment">Submit Payment</button>-->
+        </div>
+    </div>
+
+    <script>
+        var monri = Monri('<authenticity-token>');
+        var components = monri.components({"clientSecret": "<client-secret>"});
+
+        // Custom styling can be passed to options when creating an Component.
+        var style = {
+            base: {
+                // Add your base input styles here. For example:
+                fontSize: '16px',
+                color: '#663399',
+            }
+        };
+        // Create an instance of the card Component.
+        var card = components.create('card', {style: style});
+        // Add an instance of the card Component into the `card-element` <div>.
+        card.mount('card-element');
+
+        var form = document.getElementById('checkout-form');
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            const address = document.getElementById('billing_address_1');
+
+            if (! address.value) {
+                return;
+            }
+
+            const name = document.getElementById('first_name');
+            const surname = document.getElementById('last_name');
+
+            const fullName = name.value + ' ' + surname.value;
+
+            if (fullName.trim() === '') {
+                return;
+            }
+
+            const phone = document.getElementById('phone_number');
+
+            if (! phone.value) {
+                return;
+            }
+
+            const transactionParams = {
+                address: address.value,
+                fullName: fullName,
+                city: "Sarajevo",
+                zip: "71000",
+                phone: phone.value,
+                country: "BA",
+                orderInfo: '<order-info>',
+                email: (name.value + '.' + surname.value + '@gmail.com').toLowerCase()
+            }
+
+            monri.confirmPayment(card, transactionParams).then(function (result) {
+                const errorElement = document.getElementById('card-errors');
+
+                if (result.error) {
+                    // Inform the customer that there was an error.
+                    errorElement.textContent = result.error.message;
+                } else {
+                    const form = document.getElementById('checkout-form');
+
+                    if (form) {
+                        form.submit();
+                    } else {
+                        errorElement.textContent = 'Payment Success';
+                    }
+                }
+            });
+        });
+    </script>
+</div>
+

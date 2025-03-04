@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="../../favicon.ico">
+  
+
+  <base href="">
+
+  <title>Vvveb - Monri payment</title>
+
+  <link href="css/admin.css" rel="stylesheet">
+</head>
+
+
+<body>
+
+  <div id="container">
+
+    <div class="sidebar" data-v-copy-from="index.html,.sidebar">
+    </div>
+
+
+    <div class="main">
+
+      <div class="clearfix top-header" data-v-copy-from="index.html,.top-header">
+      </div>
+
+      <form id="stripe-payment-form" action="" method="post" class="settings" data-v-product>
+        <input type="hidden" name="action" id="action" value="save">
+        <div class="actions">
+          <div class="title">
+			<h4 class="text-muted mt-2">
+              <img src="../../plugins/stripe/stripe.svg" height="42">
+              <span>Monri Payment Plugin</span>
+            </h4>
+          </div>
+          <div class="btns">
+			<a href="{$this.adminPath}index.php?module=plugin/plugins" title="Plugins list"
+					class="btn btn-icon btn-outline-secondary me-2">
+						<i class="la la-arrow-left"></i><span>Plugins list</span>
+			</a>  
+          <button type="submit" href="" class="btn btn-primary btn-icon ms-1" title="Save post">
+            <i class="icon-create-outline"></i> <span>Save settings</span>
+          </button>
+        </div>
+        </div>
+        <div>
+          <div id="main-content">
+
+         	<div class="notifications" data-v-notifications data-v-copy-from="index.html,.notifications"></div>
+
+            <div class="content clearfix stripe-payment px-4">
+
+
+				<div class="row mb-3">
+				  <label placeholder="Merchant Key" class="col-sm-2 col-form-label">Merchant Key</label>
+				  <div class="col-sm-10">
+					<input type="text" class="form-control" placeholder="" name="settings[merchant_key]">
+				  </div>
+				</div>
+
+				<div class="row mb-3">
+				  <label for="input-secret" class="col-sm-2 col-form-label">Merchant Secret</label>
+				  <div class="col-sm-10">
+					  
+					<div class="input-group">
+						  <input type="password" autocorrect="off" class="form-control" placeholder="Secret API Key"  id="input-secret" autocomplete="off" value="" aria-label="Password" name="settings[secret]">
+						  <div class="input-group-append">
+							<button class="btn px-3 border border-start-0" type="button" onclick="togglePasswordInput(this, 'input-secret')"><i class="icon-eye-off-outline"></i></button>
+						  </div>
+					  </div>							  
+				  </div>
+				</div>
+
+	
+				  <div class="row mb-3">
+					<label for="input-payment-status" class="col-sm-2 col-form-label">Payment status</label>
+					<div class="col-sm-10">
+						<select name="settings[payment_status_id]" id="input-payment-status" class="form-select" data-v-payment_status_id>
+							  <option value="1" data-v-option>Pending</option>
+							  <option value="2" data-v-option>Complete</option>
+					  </select>
+					</div>
+				  </div>				  
+				  <div class="row mb-3">
+					<label for="input-geo-region" class="col-sm-2 col-form-label">
+						<span>Geo Region</span>
+						<div class="form-text">Based on billing address</div>
+					</label>
+					<div class="col-sm-10">
+						<select name="settings[region_group_id]" id="input-geo-region" class="form-select" data-v-region_group_id>
+							  <option value="0">-- All Regions --</option>
+							  <option value="4" data-v-option>UK Shipping</option>
+							  <option value="3" data-v-option>UK VAT Region</option>
+						</select>
+					</div>
+				  </div>
+				  <div class="row mb-3">
+					<label for="input-sort-order" class="col-sm-2 col-form-label">Sort Order</label>
+					<div class="col-sm-10">
+					  <input type="text" name="settings[sort_order]" value="1" placeholder="Sort Order" id="input-sort-order" class="form-control">
+					</div>
+				  </div>
+
+
+					<div class="mt-5">
+						<ul class="nav nav-tabs language-nav mb-3" id="seo-language-nav" data-v-languages="seo" style="margin-top: -2.5rem;right: 2.5rem;">
+							<li class="nav-item" data-v-language>
+								<a href="#language1" class="nav-link" data-bs-toggle="tab" aria-expanded="true" data-v-language-link>
+									<!-- img src="language/en-gb/en-gb.png" title="English" data-v-language-img --> 
+									<span data-v-language-name>English</span>
+								</a>
+							</li>
+						 </ul>
+						 
+							 
+							 
+						   <div class="tab-content" data-v-languages="seo" style="clear:both">
+							<div class="tab-pane" id="language1" data-v-language data-v-language-id>
+
+							  <div class="row mb-3">
+									<label for="input-name" class="col-sm-2 col-form-label">Name</label>
+									<div class="col-sm-10">
+									  <input type="text" name="lang[desc][1][name]" value="" id="input-name" class="form-control" placeholder="Stripe" data-v-lang-name>
+									</div>
+								  </div>
+								  <div class="row mb-3">
+									<label for="input-cost" class="col-sm-2 col-form-label">Payment instructions/message</label>
+									<div class="col-sm-10">
+									  <textarea name="lang[desc][1][message]" value="0" rows="5" placeholder="Pay with credit card" id="input-message" class="form-control" data-v-lang-message></textarea>
+									</div>
+								  </div>
+
+							
+								</div>
+							</div>
+
+						</div>						
+					</div>						
+
+            </div>
+          </div>
+      </form>
+
+    </div>
+  </div>
+
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script id="admin-js" type="module" src="../../js/admin.js"></script>
+<script type="module" src="../../js/admin.js"></script>
+
+<script>
+function togglePasswordInput(element, input) {
+	let password = document.getElementById(input);
+	if (password.type == "password") {
+		password.type = "text"; 
+		let i = element.querySelector("i")
+		i.classList.add("icon-eye-outline")
+		i.classList.remove("icon-eye-off-outline");
+	} else {
+		password.type = "password";
+		let i = element.querySelector("i")
+		i.classList.remove("icon-eye-outline")
+		i.classList.add("icon-eye-off-outline");
+	}
+}
+</script>
+</body>
+
+</html>
