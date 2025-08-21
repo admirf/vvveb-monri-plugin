@@ -72,17 +72,28 @@ class Payment extends PaymentMethod {
             return $method_data;
         }
 
-        $payment = $this->monriPayment($settings['url'] ?? 'https://ipgtest.monri.com', $settings['secret'], $settings['merchant_key'], [
-            'amount' => intval(round(floatval($cart->getGrandTotal()), 2) * 100),
-            'currency' => sess('currency') ?? 'BAM',
-            'order_id' => 'new_order' . time(),
-        ]);
+        $clientSecret = sess('monri_client_secret');
 
-        if ($payment['status'] === 'approved') {
+        if (! $clientSecret) {
+            $payment = $this->monriPayment($settings['url'] ?? 'https://ipgtest.monri.com', $settings['secret'], $settings['merchant_key'], [
+                'amount' => intval(round(floatval($cart->getGrandTotal()), 2) * 100),
+                'currency' => sess('currency') ?? 'BAM',
+                'order_id' => 'new_order' . time(),
+            ]);
+
+            if (! empty($payment['client_secret'])) {
+                $clientSecret = $payment['client_secret'];
+                sess([
+                    'monri_client_secret' => $clientSecret,
+                ]);
+            }
+        }
+
+        if ($clientSecret) {
             $form = file_get_contents(DIR_PUBLIC . $template);
 
             $form = str_replace('<authenticity-token>', $settings['secret'], $form);
-            $form = str_replace('<client-secret>', $payment['client_secret'], $form);
+            $form = str_replace('<client-secret>', $clientSecret, $form);
             $form = str_replace('<order-info>', $description, $form);
         } else {
             $form = file_get_contents(DIR_PUBLIC . 'plugins/vvveb-monri-plugin/monri-declined.html');
@@ -104,7 +115,9 @@ class Payment extends PaymentMethod {
 
     public function authorize()
     {
-
+        sess([
+            'monri_client_secret' => null,
+        ]);
     }
 
     protected function monriPayment(string $url, string $authenticity_token, string $key, $data) {
