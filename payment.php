@@ -64,7 +64,7 @@ class Payment extends PaymentMethod {
             return $method_data;
         }
 
-		$template = 'plugins/vvveb-monri-plugin/monri.html';
+		$template = 'plugins/vvveb-monri-plugin-main/monri.html';
 
         $cart = Cart::getInstance();
 
@@ -102,7 +102,7 @@ class Payment extends PaymentMethod {
             $form = str_replace('<client-secret>', $clientSecret, $form);
             $form = str_replace('<order-info>', $description, $form);
         } else {
-            $form = file_get_contents(DIR_PUBLIC . 'plugins/vvveb-monri-plugin/monri-declined.html');
+            $form = file_get_contents(DIR_PUBLIC . 'plugins/vvveb-monri-plugin-main/monri-declined.html');
         }
 
 		if (APP == 'app') {
@@ -127,7 +127,7 @@ class Payment extends PaymentMethod {
     }
 
     protected function monriPayment(string $url, string $authenticity_token, string $key, $data) {
-        echo "<h1>Poziv se desio</h1>";
+        var_dump('desi se');
 
         $data = [
             'amount' => $data['amount'], //minor units = 1EUR
