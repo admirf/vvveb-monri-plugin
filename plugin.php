@@ -34,7 +34,7 @@ Settings: /admin/?module=plugins/vvveb-monri-plugin/settings
 
 use Vvveb\System\Cart\Cart;
 use function Vvveb\getSetting;
-use Vvveb\Plugins\VvvebMonriPlugin\Payment;
+use Vvveb\Plugins\VvvebMonriPluginMain\Payment;
 use Vvveb\System\Core\Request;
 use Vvveb\System\Core\View;
 use Vvveb\System\Event;
@@ -47,7 +47,7 @@ if (! defined('V_VERSION')) {
 	die('Invalid request!');
 }
 
-class VvvebMonriPlugin {
+class VvvebMonriPluginMain {
 	private $view;
 
 	function charge($checkoutInfo, $order_id, $site) {
@@ -115,4 +115,4 @@ class VvvebMonriPlugin {
 	}
 }
 
-$monri = new VvvebMonriPlugin();
+$monri = new VvvebMonriPluginMain();
