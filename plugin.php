@@ -41,6 +41,7 @@ use Vvveb\System\Event;
 use Vvveb\System\Payment as PaymentApi;
 use Vvveb\System\Routes;
 use Vvveb\System\Cart\Order;
+use function Vvveb\session as sess;
 
 if (! defined('V_VERSION')) {
 	die('Invalid request!');

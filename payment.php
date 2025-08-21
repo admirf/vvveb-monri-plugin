@@ -121,6 +121,8 @@ class Payment extends PaymentMethod {
     }
 
     protected function monriPayment(string $url, string $authenticity_token, string $key, $data) {
+        echo "<h1>Poziv se desio</h1>";
+
         $data = [
             'amount' => $data['amount'], //minor units = 1EUR
             // unique order identifier
