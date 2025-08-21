@@ -1,7 +1,7 @@
 <?php
 /*
 Name: Monri plugin
-Slug: vvveb-monri-plugin
+Slug: vvveb-monri-plugin-main
 Category: tools
 Url: https://github.com/admirf/vvveb-monri-plugin
 Description: Monri Payment Method
