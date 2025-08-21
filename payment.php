@@ -20,7 +20,7 @@
  *
  */
 
-namespace Vvveb\Plugins\VvvebMonriPlugin;
+namespace Vvveb\Plugins\VvvebMonriPluginMain;
 
 use function Vvveb\getLanguageId;
 use function Vvveb\getMultiSettingContent;
