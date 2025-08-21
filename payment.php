@@ -127,8 +127,6 @@ class Payment extends PaymentMethod {
     }
 
     protected function monriPayment(string $url, string $authenticity_token, string $key, $data) {
-        var_dump('desi se');
-
         $data = [
             'amount' => $data['amount'], //minor units = 1EUR
             // unique order identifier
