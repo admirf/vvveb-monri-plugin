@@ -58,6 +58,12 @@ class Payment extends PaymentMethod {
 		$method_data['description'] = $desc[$language_id]['desc']['message'] ?? $method_data['description'];
 		$method_data['title']       = $desc[$language_id]['desc']['name'] ?? $method_data['title'];
 
+        if (empty($checkoutInfo)) {
+            $method_data['render'] = '';
+
+            return $method_data;
+        }
+
 		$template = 'plugins/vvveb-monri-plugin/monri.html';
 
         $cart = Cart::getInstance();
