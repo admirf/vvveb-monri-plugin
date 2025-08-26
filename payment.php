@@ -166,9 +166,11 @@ class Payment extends PaymentMethod {
             curl_close($ch);
             $res = json_decode($result, true);
 
-            var_dump($res);
+            if (isset($res['client_secret'])) {
+                return ['status' => 'approved', 'client_secret' => json_decode($result, true)['client_secret']];
+            }
 
-            return ['status' => 'approved', 'client_secret' => json_decode($result, true)['client_secret']];
+            return ['client_secret' => null, 'status' => 'declined', 'error' => curl_error($ch)];
         }
     }
 }
