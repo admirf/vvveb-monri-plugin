@@ -9,7 +9,7 @@ Thumb: monri.svg
 Author: admirf
 Version: 0.1
 Author url: https://github.com/admirf
-Settings: /admin/?module=plugins/vvveb-monri-plugin/settings
+Settings: /admin/?module=plugins/vvveb-monri-plugin-main/settings
 */
 
 /**
