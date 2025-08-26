@@ -1,6 +1,6 @@
 <?php
 
-namespace Vvveb\Plugins\VvvebMonriPlugin\Controller;
+namespace Vvveb\Plugins\VvvebMonriPluginMain\Controller;
 
 use function Vvveb\__;
 use Vvveb\Controller\Base;
