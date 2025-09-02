@@ -88,12 +88,12 @@ class VvvebMonriPluginMain {
 	}
 
 	function app() {
-        Event::on('Vvveb\Controller\Cart\Cart', 'action', __CLASS__, function ($action, $productId, $key, $quantity, $option, $subscriptionPlanId) {
+        /*Event::on('Vvveb\Controller\Cart\Cart', 'action', __CLASS__, function ($action, $productId, $key, $quantity, $option, $subscriptionPlanId) {
             // if cart is changed, reset monri client secret
             sess([
                 'monri_client_secret' => null,
             ]);
-        }, 0);
+        }, 0);*/
 	}
 
 	function __construct() {

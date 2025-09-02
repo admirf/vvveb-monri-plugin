@@ -6,6 +6,7 @@ use function Vvveb\__;
 use Vvveb\Controller\Base;
 use function Vvveb\session as sess;
 use Vvveb\System\Cart\Cart;
+use function Vvveb\getSetting;
 
 class Monri extends Base
 {
@@ -13,6 +14,8 @@ class Monri extends Base
 
     public function payment()
     {
+        $settings = \Vvveb\getSetting($this->namespace, null, null, SITE_ID);
+
         $cart = Cart::getInstance();
 
         $description = '';
@@ -22,9 +25,11 @@ class Monri extends Base
         }
 
         if (! $cart->getGrandTotal()) {
-            return json_encode([
+            $this->response->setType('json');
+            $this->response->output([
                 'status' => 'declined',
             ]);
+            return;
         }
 
         $payment = $this->monriPayment($settings['url'] ?? 'https://ipgtest.monri.com', $settings['secret'], $settings['merchant_key'], [
@@ -36,14 +41,18 @@ class Monri extends Base
         if (! empty($payment['client_secret'])) {
             $clientSecret = $payment['client_secret'];
 
-            return json_encode([
+            $this->response->setType('json');
+            $this->response->output([
                 'status' => 'approved',
                 'client_secret' => $clientSecret,
                 'description' => $description,
             ]);
+            return;
         }
 
-        return json_encode([
+
+        $this->response->setType('json');
+        $this->response->output([
             'status' => 'declined',
         ]);
     }
