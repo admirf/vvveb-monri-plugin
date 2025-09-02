@@ -21,11 +21,13 @@
     <script>
         var monri = Monri('<authenticity-token>');
 
+        var monriInitialized = false;
+
         const paymentInput = document.querySelector('input[name="payment_method"]');
         paymentInput.addEventListener('click', function (event) {
             const target = event.target;
 
-            if (target.value === 'monri') {
+            if (target.value === 'monri' && ! monriInitialized) {
                 initMonri();
             }
         })
@@ -55,6 +57,8 @@
                     var card = components.create('card', {style: style});
                     // Add an instance of the card Component into the `card-element` <div>.
                     card.mount('card-element');
+
+                    monriInitialized = true;
 
                     var form = document.getElementById('checkout-form');
                     form.addEventListener('submit', function (event) {
