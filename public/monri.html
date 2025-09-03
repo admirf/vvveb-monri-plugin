@@ -33,7 +33,7 @@
         })
 
         function initMonri() {
-            fetch('/admin/?module=plugins/vvveb-monri-plugin-main/monri&action=payment')
+            fetch('/index.php?module=plugins/vvveb-monri-plugin-main/monri&action=payment')
                 .then(function (response) {
                     return response.json();
                 })
