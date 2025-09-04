@@ -64,7 +64,7 @@ class Monri extends Base
             'order_number' => $data['order_id'],
             'currency' => $data['currency'],
             'transaction_type' => 'purchase',
-            'order_info' => 'Create payment session order info',
+            'order_info' => 'Order #' . $data['order_id'],
             'scenario' => 'charge',
             'supported_payment_methods' => ['card']
         ];
